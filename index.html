@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Asawa</title>
+    
+    <link rel="icon" href="https://i.ibb.co/GvxxMpG7/kmc-20251204-181402.png" type="image/png">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #b3e5fc;       /* Light Blue Background */
+            --envelope-body: #f48fb1;  /* Pink Envelope */
+            --envelope-flap: #e91e63;  /* Darker Pink Flap */
+            --letter-paper: #fff0f5;   /* Very Light Pink Paper */
+            --text-color: #546e7a;     /* Dark Grey Text */
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Press Start 2P', cursive;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            flex-direction: column;
+            text-align: center;
+            position: relative;
+        }
+
+        /* --- FLOATING HEARTS ANIMATION --- */
+        .heart-float {
+            position: absolute;
+            color: #ff8a80;
+            font-size: 20px;
+            user-select: none;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- SCREEN 1: INTRO MESSAGE --- */
+        #intro-screen {
+            position: absolute;
+            z-index: 20;
+            width: 80%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 1s;
+        }
+
+        /* --- SCREEN 2: THE QUESTION --- */
+        #question-screen {
+            display: none; 
+            position: relative;
+            z-index: 10;
+        }
+
+        /* --- COUNTDOWN STYLES --- */
+        #countdown-container {
+            font-size: 10px;
+            margin-bottom: 15px;
+            color: #546e7a;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 8px;
+            border-radius: 5px;
+            border: 2px solid #fff;
+            box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+        }
+
+        .main-gif {
+            width: 180px;
+            margin-bottom: 20px;
+            border: 4px solid var(--text-color);
+            background: white;
+            padding: 10px;
+            box-shadow: 8px 8px 0 rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-size: 16px;
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap; 
+        }
+
+        button {
+            font-family: 'Press Start 2P', cursive;
+            border: 4px solid var(--text-color);
+            outline: none;
+            cursor: pointer;
+            box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
+            transition: all 0.1s;
+            padding: 15px 30px;
+            font-size: 14px;
+            z-index: 100; /* Above hearts */
+        }
+
+        button:active {
+            box-shadow: 0 0 0 rgba(0,0,0,0.2);
+            transform: translate(4px, 4px);
+        }
+
+        #startBtn { background-color: #fff176; color: var(--text-color); }
+        #yesBtn { background-color: #a5d6a7; color: var(--text-color); }
+        #noBtn { background-color: var(--envelope-body); color: white; }
+
+        /* --- SCREEN 3: THE ENVELOPE ANIMATION --- */
+        #celebration-screen {
+            display: none; 
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+        }
+
+        .envelope-wrapper {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            margin-top: 100px;
+        }
+
+        .envelope {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: var(--envelope-body); 
+            border: 4px solid #546e7a;
+            z-index: 10;
+        }
+
+        .flap {
+            position: absolute;
+            top: 0; left: 0; width: 0; height: 0;
+            border-left: 146px solid transparent;
+            border-right: 146px solid transparent;
+            border-top: 110px solid var(--envelope-flap);
+            transform-origin: top;
+            transition: transform 0.6s ease-in-out;
+            z-index: 20;
+        }
+
+        .pocket-front {
+            position: absolute;
+            bottom: 0; left: 0; width: 100%; height: 0;
+            border-bottom: 110px solid var(--envelope-body);
+            border-left: 146px solid transparent;
+            border-right: 146px solid transparent;
+            z-index: 30;
+        }
+
+        .letter {
+            position: absolute;
+            bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 90%; height: 90%;
+            background: var(--letter-paper);
+            border: 2px solid #546e7a;
+            z-index: 5;
+            transition: bottom 0.8s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .letter img { width: 80px; margin-bottom: 10px; }
+        .letter h2 { font-size: 10px; color: var(--envelope-flap); line-height: 1.4; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .open-envelope .flap { transform: rotateX(180deg); z-index: 1; }
+        .open-envelope .letter { bottom: 120px; z-index: 40; }
+
+    </style>
+</head>
+<body>
+
+    <div id="intro-screen">
+        <h1>Asking you in a chat felt too ordinary. So I made this instead babyy hope yah like it lol.</h1>
+        <button id="startBtn">CONTINUE >></button>
+    </div>
+
+    <div id="question-screen">
+        <div id="countdown-container">
+            Loading Timer...
+        </div>
+        
+        <img src="https://i.ibb.co/fVn8RKy3/cinnamoroll-sad-usagif.gif" alt="Cute Cinnamoroll" class="main-gif">
+        <h1>Will you be my Valentine?</h1>
+        <div class="btn-container">
+            <button id="yesBtn">YES</button>
+            <button id="noBtn">NO</button>
+        </div>
+    </div>
+
+    <div id="celebration-screen">
+        <div class="envelope-wrapper" id="envelopeWrapper">
+            <div class="envelope">
+                <div class="flap"></div>
+                <div class="pocket-front"></div>
+                <div class="letter">
+                    <img src="https://i.ibb.co/cSNjpnSF/1e873ab91083f2cb15a3b15444b2347a.gif" alt="Happy Cinnamoroll">
+                    <h2>YAY! <br> See you on 14th my love! i love youu soo much <br> ❤</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const introScreen = document.getElementById('intro-screen');
+        const startBtn = document.getElementById('startBtn');
+        const questionScreen = document.getElementById('question-screen');
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const celebrationScreen = document.getElementById('celebration-screen');
+        const envelopeWrapper = document.getElementById('envelopeWrapper');
+        const countdownContainer = document.getElementById('countdown-container');
+
+        let yesFontSize = 14;
+        let yesPadding = 15;
+        const noTexts = ["No", "Are you sure?", "Really?", "Think again!", "Just click Yes!"];
+        let clickCount = 0;
+
+        // --- HEART GENERATOR ---
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-float');
+            heart.innerHTML = '❤';
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 3 + 2 + "s"; 
+            heart.style.fontSize = Math.random() * 20 + 10 + "px";
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
+        setInterval(createHeart, 300);
+
+        // --- COUNTDOWN LOGIC (NEW) ---
+        function updateCountdown() {
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            
+            // Set date to Feb 14 of current year
+            let valentinesDay = new Date(currentYear, 1, 14); // Month is 0-indexed (1 is Feb)
+
+            // If Valentine's has already passed this year, set to next year
+            if (now > valentinesDay) {
+                valentinesDay = new Date(currentYear + 1, 1, 14);
+            }
+
+            const diff = valentinesDay - now;
+
+            // Calculations
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            // Update HTML
+            countdownContainer.innerHTML = 
+                `Time until Valentine's:<br>` + 
+                `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+        
+        // Run immediately then every second
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+
+        // --- EVENT LISTENERS ---
+        startBtn.addEventListener('click', () => {
+            introScreen.style.display = 'none';
+            questionScreen.style.display = 'block';
+        });
+
+        noBtn.addEventListener('click', () => {
+            yesFontSize += 15;
+            yesPadding += 10;
+            yesBtn.style.fontSize = yesFontSize + 'px';
+            yesBtn.style.padding = yesPadding + 'px ' + (yesPadding * 2) + 'px';
+            clickCount++;
+            if (clickCount < noTexts.length) {
+                noBtn.innerText = noTexts[clickCount];
+            } else {
+                noBtn.innerText = "NO :(";
+            }
+        });
+
+        yesBtn.addEventListener('click', () => {
+            questionScreen.style.display = 'none';
+            celebrationScreen.style.display = 'flex';
+            setTimeout(() => {
+                envelopeWrapper.classList.add('open-envelope');
+            }, 100);
+        });
+    </script>
+</body>
+</html>
